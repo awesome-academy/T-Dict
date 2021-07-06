@@ -97,13 +97,14 @@ class DetailsViewController: BaseViewController, UINavigationControllerDelegate 
         pageController.delegate = self
         pageController.dataSource = self
         pageController.view.backgroundColor = .clear
-        guard let navBottom = navigationController?.navigationBar.bottom else {
+        guard let navBottom = navigationController?.navigationBar.bottom,
+            let tabBarHeight = tabBarController?.tabBar.height else {
             return
         }
         pageController.view.frame = CGRect(x: 0,
                                            y: navBottom + segmentControl.height,
                                            width: view.width,
-                                           height: view.height)
+                                           height: view.height - tabBarHeight - navBottom)
         pageController.setViewControllers([childViews[currentPageIndex]],
                                           direction: .forward,
                                           animated: true,
@@ -169,6 +170,7 @@ extension DetailsViewController: UIPageViewControllerDelegate, UIPageViewControl
             return
         }
         segmentControl.selectedSegmentIndex = currentIndex
+        
     }
 }
 
